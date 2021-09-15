@@ -27,7 +27,7 @@
         "title":  { "type": "string", "title": "Title", "default": "A new task" },
         "done":   { "type": "boolean", "title": "Done?", "default": false }
       }
-    }'></div>
+    }' json-data='{"title":"DEMO!"}'></div>
     -----
     <div id="form3" class="jsonform" json-schema='{
       "title": "Todo",
@@ -37,5 +37,26 @@
         "title":  { "type": "string", "title": "Title", "default": "A new task" }
       }
     }'></div>
+
+    <button onclick="addForm()">Add form</button>
+    <div id="panel">
+    </div>
+  <script>
+    document.getElementById('form1').addEventListener('jsonform-submit', function (e) {
+      console.log("CAPTURED:", e.detail);
+    });
+    function addForm() {
+      document.getElementById('panel').innerHTML += '<div class="jsonform" json-schema=\'{\n' +
+              '      "title": "Todo",\n' +
+              '      "type": "object",\n' +
+              '      "required": ["title"],\n' +
+              '      "properties": {\n' +
+              '        "title":  { "type": "string", "title": "Title", "default": "A new task" },\n' +
+              '        "done":   { "type": "boolean", "title": "Done?", "default": false }\n' +
+              '      }\n' +
+              '    }\'></div>' +
+              '';
+    }
+  </script>
   </body>
 </html>

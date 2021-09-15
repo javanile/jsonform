@@ -3,7 +3,20 @@ import './jsonform.css';
 
 import Form from "@rjsf/core";
 
-const log = (type) => console.log.bind(console, type);
+const submit = function(form) {
+    return (data) => {
+        const event = new CustomEvent('jsonform-submit', { detail: data });
+        form.dispatchEvent(event);
+    };
+}
+
+const change = (data) => {
+    console.log("CHANGE", data);
+};
+
+const error = (data) => {
+    console.log("ERROR", data);
+};
 
 function uniqid(prefix = "", random = false) {
     const sec = Date.now() * 1000 + Math.random() * 1000;
@@ -13,18 +26,32 @@ function uniqid(prefix = "", random = false) {
 
 function JsonForm(props) {
     let id = uniqid('jsonform-');
-    let schema = props.form.getAttribute('json-schema');
+    let config = {
+        schema: props.form.getAttribute('json-schema'),
+        uiSchema: props.form.getAttribute('json-ui-schema'),
+        jsonData: props.form.getAttribute('json-data')
+    }
 
-    try {
-        schema = JSON.parse(schema);
-    } catch (error) {
-        console.log('[JsonForm] ERROR! The following string is not a valid JSON object:', schema);
-        schema = {}
+    for (let key in config) {
+        try {
+            config[key] = JSON.parse(config[key]) || {};
+        } catch (error) {
+            console.log('[JsonForm] ERROR! The following string is not a valid JSON object:', config[key]);
+            config[key] = {}
+        }
     }
 
     return (
-        <div className="App">
-            <Form id={id} schema={schema} onChange={log("changed")} onSubmit={log("submitted")} onError={log("errors")} />
+        <div className="jsonform-wrapper">
+            <Form
+                id={id}
+                schema={config['schema']}
+                uiSchema={config['uiSchema']}
+                formData={config['jsonData']}
+                onChange={change}
+                onSubmit={submit(props.form)}
+                onError={error}
+            />
         </div>
     );
 }
