@@ -2,7 +2,7 @@ module.exports = {
     webpack: {
         configure: {
             output: {
-                filename: 'static/js/jsonform.js'
+                filename: 'js/jsonform.js'
             },
             optimization: {
                 runtimeChunk: false,
@@ -18,7 +18,7 @@ module.exports = {
         {
             plugin: {
                 overrideWebpackConfig: ({ webpackConfig }) => {
-                    webpackConfig.plugins[5].options.filename = 'static/css/jsonform.css';
+                    webpackConfig.plugins[5].options.filename = 'css/jsonform.css';
                     return webpackConfig;
                 },
             },
