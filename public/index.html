@@ -9,7 +9,7 @@
     <title>jsonform demo</title>
   </head>
   <body>
-    <div class="jsonform" json-schema='{
+    <div id="form1" class="jsonform" json-schema='{
       "title": "Todo",
       "type": "object",
       "required": ["title"],
@@ -17,8 +17,9 @@
         "title":  { "type": "string", "title": "Title", "default": "A new task" },
         "done":   { "type": "boolean", "title": "Done?", "default": false }
       }
-    }'/>
-    <div class="jsonform" json-schema='{
+    }'></div>
+    -----
+    <div id="form2" class="jsonform" json-schema='{
       "title": "Todo",
       "type": "object",
       "required": ["title"],
@@ -26,6 +27,15 @@
         "title":  { "type": "string", "title": "Title", "default": "A new task" },
         "done":   { "type": "boolean", "title": "Done?", "default": false }
       }
-    }' />
+    }'></div>
+    -----
+    <div id="form3" class="jsonform" json-schema='{
+      "title": "Todo",
+      "type": "object",
+      "required": ["title"],
+      "properties": {
+        "title":  { "type": "string", "title": "Title", "default": "A new task" }
+      }
+    }'></div>
   </body>
 </html>
