@@ -15,7 +15,12 @@
       "required": ["title"],
       "properties": {
         "title":  { "type": "string", "title": "Title", "default": "A new task" },
+        "status":  { "type": "string", "title": "Status", "default": "" },
         "done":   { "type": "boolean", "title": "Done?", "default": false }
+      }
+    }' json-ui-schema='{
+      "status": {
+        "ui:widget": "custom-select"
       }
     }'></div>
     -----
@@ -44,6 +49,12 @@
   <script>
     document.getElementById('form1').addEventListener('jsonform-submit', function (e) {
       console.log("CAPTURED:", e.detail);
+    });
+    document.getElementById('form1').addEventListener('jsonform-focus', function (e) {
+      console.log("FOCUS:", e.detail);
+    });
+    document.getElementById('form1').addEventListener('jsonform-focus', function (e) {
+      document.querySelector("#form1 #"+e.detail.id).innerHTML = '<option value="a">A</option><option value="b">B</option>';
     });
     function addForm() {
       document.getElementById('panel').innerHTML += '<div class="jsonform" json-schema=\'{\n' +

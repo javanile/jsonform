@@ -8,10 +8,17 @@ const submit = function(form) {
         const event = new CustomEvent('jsonform-submit', { detail: data });
         form.dispatchEvent(event);
     };
-}
+};
 
 const change = (data) => {
     console.log("CHANGE", data);
+};
+
+const focus = function(form) {
+    return (id, value) => {
+        const event = new CustomEvent('jsonform-focus', { detail: {id: id, value: value} });
+        form.dispatchEvent(event);
+    };
 };
 
 const error = (data) => {
@@ -22,6 +29,23 @@ function uniqid(prefix = "", random = false) {
     const sec = Date.now() * 1000 + Math.random() * 1000;
     const id = sec.toString(16).replace(/\./g, "").padEnd(14, "0");
     return `${prefix}${id}${random ? `.${Math.trunc(Math.random() * 100000000)}`:""}`;
+};
+
+const CustomSelectWidget = (props) => {
+    console.log("PROPS:", props);
+    return (
+        <select
+           id={props.id}
+           className="custom"
+           onChange={(event) => props.onChange(event.target.value)}
+           onFocus={(event) => props.onFocus(props.id, '')}
+        >
+        </select>
+    );
+};
+
+const widgets = {
+    'custom-select': CustomSelectWidget
 };
 
 function JsonForm(props) {
@@ -50,7 +74,9 @@ function JsonForm(props) {
                 formData={config['jsonData']}
                 onChange={change}
                 onSubmit={submit(props.form)}
+                onFocus={focus(props.form)}
                 onError={error}
+                widgets={widgets}
             />
         </div>
     );
