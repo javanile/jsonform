@@ -36,9 +36,9 @@ const CustomSelectWidget = (props) => {
     return (
         <select
            id={props.id}
-           className="custom"
+           className="form-control"
            onChange={(event) => props.onChange(event.target.value)}
-           onFocus={(event) => props.onFocus(props.id, '')}
+           onFocus={(event) => props.onFocus(props.id, props.value)}
         >
         </select>
     );

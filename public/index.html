@@ -16,6 +16,7 @@
       "properties": {
         "title":  { "type": "string", "title": "Title", "default": "A new task" },
         "status":  { "type": "string", "title": "Status", "default": "" },
+        "status2":  { "type": "string", "title": "Status2", "enum": ["Z"] },
         "done":   { "type": "boolean", "title": "Done?", "default": false }
       }
     }' json-ui-schema='{
@@ -54,7 +55,11 @@
       console.log("FOCUS:", e.detail);
     });
     document.getElementById('form1').addEventListener('jsonform-focus', function (e) {
-      document.querySelector("#form1 #"+e.detail.id).innerHTML = '<option value="a">A</option><option value="b">B</option>';
+      if (e.detail.id == 'root_status') {
+        let selector = "#form1 #"+e.detail.id;
+        let elem = document.querySelector(selector);
+        elem.innerHTML = '<option value="a">A</option><option value="b">B</option>';
+      }
     });
     function addForm() {
       document.getElementById('panel').innerHTML += '<div class="jsonform" json-schema=\'{\n' +
