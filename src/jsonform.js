@@ -10,8 +10,12 @@ const submit = function(form) {
     };
 };
 
-const change = (data) => {
-    console.log("CHANGE", data);
+const change = (form) => {
+    return (data, a) => {
+        console.log("A", a)
+        const event = new CustomEvent('jsonform-change', { detail: data });
+        form.dispatchEvent(event);
+    };
 };
 
 const focus = function(form) {
@@ -44,8 +48,25 @@ const CustomSelectWidget = (props) => {
     );
 };
 
+const CustomButtonWidget = (props) => {
+    console.log("PROPS:", props);
+    return (
+        <button
+            id={props.id}
+            className="btn"
+            type="button"
+            onChange={(event) => props.onChange(event.target.value)}
+            onFocus={(event) => props.onFocus(props.id, props.value)}
+        >
+            {props.label}
+        </button>
+    );
+};
+
+
 const widgets = {
-    'custom-select': CustomSelectWidget
+    'custom-select': CustomSelectWidget,
+    'custom-button': CustomButtonWidget,
 };
 
 function JsonForm(props) {
@@ -72,7 +93,7 @@ function JsonForm(props) {
                 schema={config['schema']}
                 uiSchema={config['uiSchema']}
                 formData={config['jsonData']}
-                onChange={change}
+                onChange={change(props.form)}
                 onSubmit={submit(props.form)}
                 onFocus={focus(props.form)}
                 onError={error}

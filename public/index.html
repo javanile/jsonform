@@ -17,11 +17,15 @@
         "title":  { "type": "string", "title": "Title", "default": "A new task" },
         "status":  { "type": "string", "title": "Status", "default": "" },
         "status2":  { "type": "string", "title": "Status2", "enum": ["Z"] },
+        "action":  { "type": "string", "title": "ACTION" },
         "done":   { "type": "boolean", "title": "Done?", "default": false }
       }
     }' json-ui-schema='{
       "status": {
         "ui:widget": "custom-select"
+      },
+      "action": {
+        "ui:widget": "custom-button"
       }
     }'></div>
     -----
@@ -50,6 +54,9 @@
   <script>
     document.getElementById('form1').addEventListener('jsonform-submit', function (e) {
       console.log("CAPTURED:", e.detail);
+    });
+    document.getElementById('form1').addEventListener('jsonform-change', function (e) {
+      console.log("CHANGE:", e.detail);
     });
     document.getElementById('form1').addEventListener('jsonform-focus', function (e) {
       console.log("FOCUS:", e.detail);
