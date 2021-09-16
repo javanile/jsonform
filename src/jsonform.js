@@ -53,7 +53,7 @@ const CustomButtonWidget = (props) => {
     return (
         <button
             id={props.id}
-            className="btn"
+            className="btn btn-block"
             type="button"
             onChange={(event) => props.onChange(event.target.value)}
             onFocus={(event) => props.onFocus(props.id, props.value)}
